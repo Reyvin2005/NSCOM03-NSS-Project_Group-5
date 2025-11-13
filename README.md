@@ -115,7 +115,7 @@ The detector has three useful baseline modes at startup:
 * `TTL_MISMATCH`: A per-flow TTL deviated from its learned average by more than `TTL_CHANGE_THRESHOLD`. Severity: HIGH.
 
   * Likely cause: IP spoofing or a different OS stack for the same source IP.
-* `HIGH_RATE_SRC`: A single source sustained a high packets-per-second rate above `RATE_THRESHOLD_PPS` for consecutive windows. Severity: MEDIUM.
+* `HIGH_RATE_SRC`: A single source sustained a high packets-per-second rate above `RATE_THRESHOLD_PPS` for consecutive windows. Severity: HIGH.
 
   * Likely cause: DoS flood or high-rate scanning from a single IP.
 
