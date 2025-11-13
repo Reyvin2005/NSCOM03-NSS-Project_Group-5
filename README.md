@@ -6,12 +6,12 @@
 
 ---
 
-## Summary (one line)
+## Summary
 Lightweight lab tool that learns normal traffic (baseline), then detects IP-spoofing by TTL changes and DoS-like high-rate sources on an isolated test network.
 
 ---
 
-## Files in this repo
+## Files in this repository
 - `detect.py`  — Main detector (interactive baseline management, detection, run logging, pcaps)
 - `Client1.py` — Legitimate client simulator (Windows-like TTL=128)
 - `Client2.py` — Legitimate client simulator (Linux-like TTL=64)
@@ -22,7 +22,7 @@ Lightweight lab tool that learns normal traffic (baseline), then detects IP-spoo
 
 ---
 
-## What this does (plain)
+## What the detector does
 1. **Learn**: while in baseline mode the detector records flows (src→dst), counts packets and records average TTL per flow.
 2. **Validate**: a flow becomes a trusted baseline entry once it has enough packets (configurable).
 3. **Detect**: after baseline completes, the detector checks every captured packet:
