@@ -86,7 +86,7 @@ Follow these steps in *different terminal windows* so detector, clients, and att
      Tip: You can add a specific IP Address by using the command:
      `netsh interface ipv4 add address "[enter interface]" [add Ip address you want to use]`
 ---
-### 1) Start the detector (terminal A)
+### 1) Start the detector (Terminal A)
 1. Open Terminal A and run:
    ```bash
    python detect.py
@@ -102,7 +102,7 @@ Follow these steps in *different terminal windows* so detector, clients, and att
 
 ---
 
-### 2) Start legitimate clients (terminals B and C) — *during baseline*
+### 2) Start legitimate clients (Terminals B and C) — *during baseline*
 Start the traffic generators so the detector learns normal flows and TTLs.
 
 Terminal B:
