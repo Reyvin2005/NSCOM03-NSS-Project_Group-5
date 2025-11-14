@@ -7,7 +7,7 @@
 ---
 
 ## Summary
-Lightweight lab tool that learns normal traffic (baseline), then detects IP-spoofing by TTL changes and DoS-like high-rate sources on an isolated test network.
+Lightweight tool that learns normal traffic (baseline), then detects IP-spoofing by TTL changes and DoS-like high-rate sources on an isolated test network.
 
 ---
 
