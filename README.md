@@ -1,6 +1,6 @@
 # NSS Project — IP Spoofing & TTL / DoS Detector
 
-**Project:** IP address spoofing & DoS detector using TTL analysis and high-rate detection  
+**Project:** Baseline-Learning Network Security System for Detecting IP Spoofing and DoS Anomalies Using TTL and Packet-Rate Analysis  
 **Version:** 1.1 
 **Authors:** Ivan Antonio Alvarez, Joshua Benedict Co, Reyvin Matthew Tan
 
