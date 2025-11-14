@@ -65,6 +65,25 @@ Edit constants near the top of `detect.py`:
 
 ---
 
+## Client & Attacker IP / TTL configuration
+Edit the client and attacker constants before running the simulation. The values given are the default used for demonstration; set them to match the loopback/interface you will use.
+
+- `Client1.py`: `LOOP_IFACE`, `SRC_IP`, `DST_IP`, `TTL` — Client1 uses a Windows-like TTL by default (`128`).
+- `Client2.py`: `LOOP_IFACE`, `SRC_IP`, `DST_IP`, `TTL` — Client2 uses a Linux-like TTL by default (`64`).
+- `attack.py`: `INTERFACE_USED`, `REAL_ATTACKER_IP`, `TARGET_IP`, `SPOOFED_IP`, and per-wave TTLs in `WAVES`.
+
+Notes & tips:
+- Run `from scapy.all import show_interfaces; show_interfaces()` to see available interface names and copy the exact string (Windows loopback often appears as `\\Device\\NPF_Loopback` or a GUID device string).
+- Ensure any IP you choose for a client is assigned to the interface (example command on Windows):
+
+```powershell
+netsh interface ipv4 add address "<interface-name>" <ip-address>
+```
+
+- Make sure `TARGET_IP` / `DST_IP` values match the detector target IP used by `detect.py` so flows are learned correctly.
+- Keep TTLs consistent with the OS profiles you want to emulate (e.g., `128` for Windows, `64` for Linux/macOS, `255` for network devices).
+
+
 ## Quick start — Step-by-step simulation (run in separate terminals)
 
 Follow these steps in *different terminal windows* so detector, clients, and attacker run concurrently when needed.
